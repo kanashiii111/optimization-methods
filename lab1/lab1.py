@@ -137,7 +137,6 @@ def print_symplex_table(state: State):
 #     return n, x_n
 
 # def get_restrictions(state: State):
-#     print("n =", n)
 #     m = int(input("Введите m: "))
 #     x_m_left = []
 #     x_m_right = []
