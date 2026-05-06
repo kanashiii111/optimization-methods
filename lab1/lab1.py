@@ -2,13 +2,13 @@ import pandas as pd
 
 class State:
     def __init__(self):
-        self.n = 2 # 3
-        self.m = 1 # 3
-        self.x_n = [1.0, 2.0] #[10.0, 14.0, 12.0]
-        self.x_m_left = [[1.0, -1.0]] #[[4.0, 2.0, 1.0], [3.0, 1.0, 3.0], [1.0, 2.0, 5.0]]
-        self.x_m_right = [5.0] #[180.0, 210.0, 244.0]
+        self.n = 3
+        self.m = 3
+        self.x_n = [10.0, 14.0, 12.0]
+        self.x_m_left = [[4.0, 2.0, 1.0], [3.0, 1.0, 3.0], [1.0, 2.0, 5.0]]
+        self.x_m_right = [180.0, 210.0, 244.0]
         self.symplex_rels = []
-        self.x_m_rules = ["<="] # ["<=", "<=", "<="]
+        self.x_m_rules = ["<=", "<=", "<="]
         self.basis_vars_indexes = [] # 3 4 5
         self.free_vars_indexes = [] # 0 1 2
         self.table = pd.DataFrame()
