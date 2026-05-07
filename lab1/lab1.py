@@ -2,13 +2,13 @@ import pandas as pd
 
 class State:
     def __init__(self):
-        self.n = 3
-        self.m = 3
-        self.x_n = [10.0, 14.0, 12.0]
-        self.x_m_left = [[4.0, 2.0, 1.0], [3.0, 1.0, 3.0], [1.0, 2.0, 5.0]]
-        self.x_m_right = [180.0, 210.0, 244.0]
+        self.n: int
+        self.m: int
+        self.x_n: list
+        self.x_m_left: list[list]
+        self.x_m_right: list
         self.symplex_rels = []
-        self.x_m_rules = ["<=", "<=", "<="]
+        self.x_m_rules: list
         self.basis_vars_indexes = [] # 3 4 5
         self.free_vars_indexes = [] # 0 1 2
         self.table = pd.DataFrame()
@@ -62,7 +62,16 @@ def analyze_rel_scores(state: State) -> bool:
         print("\nНайдено оптимальное решение" + corner)
         state.optimum = True
         return False
-    column_index = state.rel_scores.index(min_score)
+    
+    for j, score in enumerate(state.rel_scores):
+        if score < 0:
+            state.e_column = j
+            break
+    
+    
+    # column_index = state.rel_scores.index(min_score)
+
+
     # column_coefs = []
     # for line in state.x_m_left:
     #     for i, number in enumerate(line):
@@ -74,7 +83,11 @@ def analyze_rel_scores(state: State) -> bool:
     # if not is_solvable:
     #     print("Целевая функция неограничена")
     #     return False
-    state.e_column = column_index
+
+
+    # state.e_column = column_index
+
+
     return True
 
 def find_symplex_rels(state: State) -> bool:
@@ -208,7 +221,7 @@ def symplex_iters(state: State):
         calc_rel_scores(state)
         print_symplex_table(state)
         iteration += 1
-        if iteration > 10:
+        if iteration > 100:
             break
     # print("\n")
     # for i, basis_idx in enumerate(state.basis_vars_indexes):
@@ -235,7 +248,78 @@ def symplex_iters(state: State):
                 optimal_value += state.x_n[basis_idx] * state.x_m_right[i]
         print(f"F = {optimal_value:.2f}")
 
-state = State()
+# state = State()
+# state.n = 4
+# state.m = 4
+# state.x_n = [5.0, 4.0, 3.0, 2.0]
+# state.x_m_left = [
+#     [3.0, 2.0, 1.0, 2.0],
+#     [1.0, 3.0, 2.0, 1.0],
+#     [2.0, 1.0, 3.0, 2.0],
+#     [1.0, 1.0, 1.0, 1.0]
+# ]
+# state.x_m_right = [100.0, 120.0, 130.0, 60.0]
+# state.x_m_rules = ["<=", "<=", "<=", "<="]   
+
+# x1 = 12.78
+# x2 = 16.11
+# x3 = 29.44
+# x4 = 0.00
+# F = 216.67
+
+# state = State()
+# state.n = 3
+# state.m = 3
+# eps = 0.2
+# state.x_n = [eps**2, eps, 1.0]
+# state.x_m_left = [
+#     [1.0, 0.0, 0.0],
+#     [2*eps, 1.0, 0.0],
+#     [2*eps**2, 2*eps, 1.0]
+# ]
+# state.x_m_right = [1.0, 1.0, 1.0]
+# state.x_m_rules = ["<=", "<=", "<="]
+
+# x1 = 0.00
+# x2 = 0.00
+# x3 = 1.00
+# F = 1.00
+
+# state = State()
+# state.n = 3
+# state.m = 2
+# state.x_n = [2.5, 1.8, 3.2]
+# state.x_m_left = [
+#     [1.2, 0.8, 0.5],
+#     [0.6, 1.4, 0.9]
+# ]
+# state.x_m_right = [15.0, 20.0]
+# state.x_m_rules = ["<=", "<="]
+
+# x1 = 4.49
+# x2 = 0.00
+# x3 = 19.23
+# F = 72.76
+
+# state = State()
+# state.n = 3
+# state.m = 3
+# state.x_n = [10.0, 14.0, 12.0]
+# state.x_m_left = [
+#     [4.0, 2.0, 1.0],
+#     [3.0, 1.0, 3.0],
+#     [1.0, 2.0, 5.0]
+# ]
+# state.x_m_right = [180.0, 210.0, 244.0]
+# state.x_m_rules = ["<=", "<=", "<="]
+
+# x1 = 0.00
+# x2 = 82.00
+# x3 = 16.00
+# F = 1340.00
+
+
+
 print("\nСтандартная форма\n")
 print_func(state)
 print_restrictions(state)
